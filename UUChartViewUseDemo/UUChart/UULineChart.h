@@ -15,7 +15,7 @@
 #define yLabelMargin    15
 #define UULabelHeight    10
 #define UUYLabelwidth     30
-#define UUTagLabelwidth     80
+#define UUTagLabelwidth     40
 
 @interface UULineChart : UIView
 
@@ -26,7 +26,7 @@
 @property (strong, nonatomic) NSArray * yValues;
 
 @property (nonatomic, strong) NSArray * colors;
-//@property (nonatomic, strong) NSMutableArray *lineArray;
+@property (nonatomic, strong) NSMutableArray *lineArray;
 
 
 @property (nonatomic) CGFloat xLabelWidth;

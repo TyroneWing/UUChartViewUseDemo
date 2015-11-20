@@ -82,18 +82,20 @@
     chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, 150)
                                               withSource:self
                                                withStyle:_indexPath.row==1?UUChartBarStyle:UUChartLineStyle];
+    
+    /**
+     当柱状图风格为UUChartBarStyle时修改 strokeChart 函数可以修改柱状图样式
+     */
 //    chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, 150)
 //                                              withSource:self
-//                                               withStyle:UUChartLineStyle];
+//                                               withStyle:UUChartBarStyle];
 
     chartView.showRange = YES;
     [self.contentView addSubview:chartView];
     
     _legendView = [[UIView alloc] initWithFrame:CGRectMake(40, 10, [UIScreen mainScreen].bounds.size.width-60, 50)];
-    [self setUpLegendView];
     [self.contentView addSubview:_legendView];
-    
-   
+    [self setUpLegendView];
 }
 
 - (void)setUpLegendView
@@ -105,9 +107,10 @@
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
             label.userInteractionEnabled = YES;
             label.tag = 8000+i;
-//            //创建一个单击手势
-//            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dealTap:)];
-//            [label addGestureRecognizer:tap];
+            //创建一个单击手势
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dealTap:)];
+            [label addGestureRecognizer:tap];
+            
             UIFont *font = [UIFont fontWithName:@"Arial" size:14];
             label.font = font;
             CGSize size = CGSizeMake(200,2000);
@@ -131,17 +134,21 @@
     chartView.frame = CGRectMake(10, _height, [UIScreen mainScreen].bounds.size.width-20, 150);
 }
 
-////单击手势
-//-(void)dealTap:(UITapGestureRecognizer *)tap
-//{
-//    NSLog(@"%d",tap.view.tag);
-//    if (chartView.chartStyle == UUChartLineStyle) {
-//        UULineChart *lineC = chartView;
-//        
-////        CAShapeLayer *_chartLine =lineC.lineArray[tap.view.tag-8000];
-////        _chartLine.lineWidth = 0;
-//    }
-//}
+//单击手势
+-(void)dealTap:(UITapGestureRecognizer *)tap
+{
+//    NSLog(@"%ld",tap.view.tag);
+    if (chartView.chartStyle == UUChartLineStyle) {
+        UULineChart *lineC = chartView;
+        
+//        NSLog(@"lineC.lineArray = %@",lineC.lineArray);
+        
+ //       NSLog(@"lineC.lineArray.count = = %lu",(unsigned long)lineC.lineArray.count);
+//        CAShapeLayer *_chartLine =lineC.lineArray[tap.view.tag-8000];
+//        _chartLine.lineWidth = 0;
+        NSLog(@"%ld",tap.view.tag);
+    }
+}
 
 #pragma mark - @required
 //横坐标标题数组
@@ -166,9 +173,6 @@
 //显示数值范围
 - (CGRange)UUChartChooseRangeInLineChart:(UUChart *)chart
 {
-
-//    NSLog(@"CGRangeMake---%f--- %f",_max,_min);
-
     return CGRangeMake(_max+1, _min);
 }
 

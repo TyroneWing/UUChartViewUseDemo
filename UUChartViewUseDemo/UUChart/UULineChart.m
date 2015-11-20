@@ -159,7 +159,7 @@
 
 -(void)strokeChart
 {
-//    _lineArray = [[NSMutableArray alloc] init];
+    _lineArray = [[NSMutableArray alloc] init];
     for (int i=0; i<_yValues.count; i++) {
         NSArray *childAry = _yValues[i];
         if (childAry.count==0) {
@@ -239,7 +239,6 @@
                          index:i
                         isShow:isShowMaxAndMinPoint
                          value:[valueString floatValue]];
-                
 //                [progressline stroke];
             }
             index += 1;
@@ -258,10 +257,8 @@
         pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
         pathAnimation.autoreverses = NO;
         [_chartLine addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
-        
         _chartLine.strokeEnd = 1.0;
-        
-
+        [_lineArray addObject:_chartLine];
     }
 }
 
@@ -273,19 +270,25 @@
     view.layer.cornerRadius = 4;
     view.layer.borderWidth = 2;
     view.layer.borderColor = [[_colors objectAtIndex:index] CGColor]?[[_colors objectAtIndex:index] CGColor]:UUGreen.CGColor;
+    view.backgroundColor = [UIColor redColor];
     
     if (isHollow) {
         view.backgroundColor = [UIColor whiteColor];
     }else{
         view.backgroundColor = [_colors objectAtIndex:index]?[_colors objectAtIndex:index]:UUGreen;
+    }
+#pragma mark - 点的Value值
+    if (value != _chooseRange.min) {
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(point.x-UUTagLabelwidth/2.0, point.y-UULabelHeight*2, UUTagLabelwidth, UULabelHeight)];
         label.font = [UIFont systemFontOfSize:10];
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = view.backgroundColor;
+        label.textColor = [_colors objectAtIndex:index];
         label.text = [NSString stringWithFormat:@"%g",value];
+        label.adjustsFontSizeToFitWidth = YES;
         [self addSubview:label];
     }
     
+
     [self addSubview:view];
 }
 

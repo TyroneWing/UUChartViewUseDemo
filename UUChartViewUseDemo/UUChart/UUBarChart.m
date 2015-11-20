@@ -27,6 +27,8 @@
         // Initialization code
         self.clipsToBounds = YES;
         myScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(UUYLabelwidth, 0, frame.size.width-UUYLabelwidth, frame.size.height)];
+        myScrollView.showsHorizontalScrollIndicator = NO;
+        myScrollView.showsVerticalScrollIndicator = NO;
         [self addSubview:myScrollView];
     }
     return self;
@@ -153,11 +155,10 @@
     _chooseRange = chooseRange;
 }
 
+//柱状图（一柱状图或者二柱状图）
 -(void)strokeChart
 {
-    
     CGFloat chartCavanHeight = self.frame.size.height - UULabelHeight*3;
-	
     for (int i=0; i<_yValues.count; i++) {
         if (i==2)
             return;
@@ -166,16 +167,12 @@
             NSString *valueString = childAry[j];
             float value = [valueString floatValue];
             float grade = ((float)value-_yValueMin) / ((float)_yValueMax-_yValueMin);
-            
             UUBar * bar = [[UUBar alloc] initWithFrame:CGRectMake((j+(_yValues.count==1?0.1:0.05))*_xLabelWidth +i*_xLabelWidth * 0.47, UULabelHeight, _xLabelWidth * (_yValues.count==1?0.8:0.45), chartCavanHeight)];
             bar.barColor = [_colors objectAtIndex:i];
             bar.grade = grade;
             [myScrollView addSubview:bar];
             bar.alpha = 1.0;
-            
-//            NSLog(@"grade = %f",grade);
             if (value != 0.0) {
-//                NSLog(@"(1 - grade) * bar.frame.size.height -5) = %f",(1 - grade) * bar.frame.size.height - 5);
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(bar.frame.origin.x,(1 - grade) * bar.frame.size.height ,bar.frame.size.width,10)];
                 label.textColor = [_colors objectAtIndex:i];
                 label.font = [UIFont systemFontOfSize:12];
@@ -184,10 +181,39 @@
                 label.adjustsFontSizeToFitWidth = YES;
                 [myScrollView addSubview:label];
             }
-           
         }
     }
 }
+
+////多柱状图
+//-(void)strokeChart
+//{
+//#pragma mark - 只能两组柱状图
+//    CGFloat chartCavanHeight = self.frame.size.height - UULabelHeight*3;
+//	
+//    for (int i=0; i<_yValues.count; i++) {
+//        NSArray *childAry = _yValues[i];
+//        for (int j=0; j<childAry.count; j++) {
+//            NSString *valueString = childAry[j];
+//            float value = [valueString floatValue];
+//            float grade = ((float)value-_yValueMin) / ((float)_yValueMax-_yValueMin);
+//            UUBar * bar = [[UUBar alloc] initWithFrame:CGRectMake(j*_xLabelWidth +i*_xLabelWidth/_yValues.count, UULabelHeight, _xLabelWidth/_yValues.count, chartCavanHeight)];
+//            bar.barColor = [_colors objectAtIndex:i];
+//            bar.grade = grade;
+//            [myScrollView addSubview:bar];
+//            bar.alpha = 1.0;
+//            if (value != _chooseRange.min) {
+//            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(bar.frame.origin.x,(1 - grade) * bar.frame.size.height ,bar.frame.size.width,10)];
+//            label.textColor = [_colors objectAtIndex:i];
+//            label.font = [UIFont systemFontOfSize:12];
+//            label.textAlignment = NSTextAlignmentCenter;
+//            label.text = [NSString stringWithFormat:@"%g",value];
+//            label.adjustsFontSizeToFitWidth = YES;
+//            [myScrollView addSubview:label];
+//            }
+//        }
+//    }
+//}
 
 - (NSArray *)chartLabelsForX
 {
