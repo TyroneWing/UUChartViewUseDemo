@@ -19,16 +19,14 @@
 
 @interface UULineChart : UIView
 
+//使用lineArray储存折线
+@property (nonatomic, strong) NSArray *lineArray;
+
+
 @property (strong, nonatomic) NSArray * xLabels;
-
 @property (strong, nonatomic) NSArray * yLabels;
-
 @property (strong, nonatomic) NSArray * yValues;
-
 @property (nonatomic, strong) NSArray * colors;
-@property (nonatomic, strong) NSMutableArray *lineArray;
-
-
 @property (nonatomic) CGFloat xLabelWidth;
 @property (nonatomic) CGFloat yValueMin;
 @property (nonatomic) CGFloat yValueMax;

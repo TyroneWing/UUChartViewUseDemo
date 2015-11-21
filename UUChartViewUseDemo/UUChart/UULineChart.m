@@ -159,7 +159,7 @@
 
 -(void)strokeChart
 {
-    _lineArray = [[NSMutableArray alloc] init];
+    NSMutableArray *lineArr = [[NSMutableArray alloc] init];
     for (int i=0; i<_yValues.count; i++) {
         NSArray *childAry = _yValues[i];
         if (childAry.count==0) {
@@ -258,8 +258,9 @@
         pathAnimation.autoreverses = NO;
         [_chartLine addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
         _chartLine.strokeEnd = 1.0;
-        [_lineArray addObject:_chartLine];
+        [lineArr addObject:_chartLine];
     }
+    self.lineArray = lineArr;
 }
 
 - (void)addPoint:(CGPoint)point index:(NSInteger)index isShow:(BOOL)isHollow value:(CGFloat)value

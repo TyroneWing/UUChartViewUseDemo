@@ -55,21 +55,22 @@
         }
     }
 
-    [self createUI];
+    [self createchartView];
     [chartView strokeChart];
+    [self setUpLegendView];
 }
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
     {
-//        [self createUI];
+//        [self createchartView];
     }
     return self;
 }
 
 
-- (void)createUI
+- (void)createchartView
 {
     if (chartView) {
         [chartView removeFromSuperview];
@@ -95,7 +96,7 @@
     
     _legendView = [[UIView alloc] initWithFrame:CGRectMake(40, 10, [UIScreen mainScreen].bounds.size.width-60, 50)];
     [self.contentView addSubview:_legendView];
-    [self setUpLegendView];
+    
 }
 
 - (void)setUpLegendView
@@ -141,7 +142,7 @@
     if (chartView.chartStyle == UUChartLineStyle) {
         UULineChart *lineC = chartView;
         
-//        NSLog(@"lineC.lineArray = %@",lineC.lineArray);
+        NSLog(@"lineC.lineArray = %@",lineC.lineArray);
         
  //       NSLog(@"lineC.lineArray.count = = %lu",(unsigned long)lineC.lineArray.count);
 //        CAShapeLayer *_chartLine =lineC.lineArray[tap.view.tag-8000];

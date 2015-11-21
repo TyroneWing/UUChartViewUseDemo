@@ -173,7 +173,7 @@
             [myScrollView addSubview:bar];
             bar.alpha = 1.0;
             if (value != 0.0) {
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(bar.frame.origin.x,(1 - grade) * bar.frame.size.height ,bar.frame.size.width,10)];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(bar.frame.origin.x,(1 - grade) * bar.frame.size.height - 2 ,bar.frame.size.width,10)];
                 label.textColor = [_colors objectAtIndex:i];
                 label.font = [UIFont systemFontOfSize:12];
                 label.textAlignment = NSTextAlignmentCenter;

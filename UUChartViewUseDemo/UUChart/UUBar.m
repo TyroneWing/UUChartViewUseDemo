@@ -35,13 +35,11 @@
     
 	_grade = grade;
 	UIBezierPath *progressline = [UIBezierPath bezierPath];
-    
-    [progressline moveToPoint:CGPointMake(self.frame.size.width/2.0, self.frame.size.height+30)];
-	[progressline addLineToPoint:CGPointMake(self.frame.size.width/2.0, (1 - grade) * self.frame.size.height+15)];
-	
+    [progressline moveToPoint:CGPointMake(self.frame.size.width/2.0, self.frame.size.height+self.frame.size.width/2.0)];
+    [progressline addLineToPoint:CGPointMake(self.frame.size.width/2.0, (1 - grade) * self.frame.size.height+self.frame.size.width/2.0)];
     [progressline setLineWidth:1.0];
     [progressline setLineCapStyle:kCGLineCapSquare];
-	_chartLine.path = progressline.CGPath;
+    _chartLine.path = progressline.CGPath;
 
 	if (_barColor) {
 		_chartLine.strokeColor = [_barColor CGColor];
