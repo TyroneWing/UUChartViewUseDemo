@@ -280,7 +280,7 @@
     }
 #pragma mark - 点的Value值
     if (value != _chooseRange.min) {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(point.x-UUTagLabelwidth/2.0, point.y-UULabelHeight*2, UUTagLabelwidth, UULabelHeight)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(point.x-UUTagLabelwidth/2.0, point.y-UULabelHeight*1.5, UUTagLabelwidth, UULabelHeight)];
         label.font = [UIFont systemFontOfSize:10];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [_colors objectAtIndex:index];
