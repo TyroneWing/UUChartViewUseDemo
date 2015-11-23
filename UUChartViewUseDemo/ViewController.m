@@ -29,14 +29,14 @@
     _barChartDict = [[NSMutableDictionary alloc] init];
 
     [self createTableView];
-    [self startDowmloadData:8];
+    [self startDowmloadData:13];
     [self startDowmloadareaWarningData];
 //    [self addBtn];
 }
 
 - (void)startDowmloadData:(int)time
 {
-    NSString *url = [NSString stringWithFormat:@"http://112.74.195.125:8080/capi/statistics/water/averageByMpCustom/6/1/2015-11-0%d/2015-11-19",time];
+    NSString *url = [NSString stringWithFormat:@"http://112.74.195.125:8080/capi/statistics/water/averageByMpCustom/6/1/2015-11-%02d/2015-11-19",time];
 //    NSString *url = @"http://112.74.195.125:8080/capi/statistics/mp/areaWarning";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFCompoundResponseSerializer serializer];

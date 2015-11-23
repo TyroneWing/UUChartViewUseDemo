@@ -109,9 +109,11 @@
     NSInteger num;
     if (xLabels.count>=8) {
         num = 8;
-    }else if (xLabels.count<=4){
-        num = 4;
-    }else{
+    }
+//    else if (xLabels.count<=4){
+//        num = 4;
+//    }
+    else{
         num = xLabels.count;
     }
     _xLabelWidth = myScrollView.frame.size.width/num;
@@ -127,22 +129,21 @@
     float max = (([xLabels count]-1)*_xLabelWidth + chartMargin)+_xLabelWidth;
     if (myScrollView.frame.size.width < max-10) {
         myScrollView.contentSize = CGSizeMake(max, self.frame.size.height);
+    } else {
+        //画竖线
+        for (int i=0; i<xLabels.count+1; i++) {
+            CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+            UIBezierPath *path = [UIBezierPath bezierPath];
+            [path moveToPoint:CGPointMake(UUYLabelwidth+i*_xLabelWidth,UULabelHeight)];
+            [path addLineToPoint:CGPointMake(UUYLabelwidth+i*_xLabelWidth,self.frame.size.height-2*UULabelHeight)];
+            [path closePath];
+            shapeLayer.path = path.CGPath;
+            shapeLayer.strokeColor = [[[UIColor blackColor] colorWithAlphaComponent:0.1] CGColor];
+            shapeLayer.fillColor = [[UIColor whiteColor] CGColor];
+            shapeLayer.lineWidth = 1;
+            [self.layer addSublayer:shapeLayer];
+        }
     }
-    
-    //画竖线
-    for (int i=0; i<xLabels.count+1; i++) {
-        CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-        UIBezierPath *path = [UIBezierPath bezierPath];
-        [path moveToPoint:CGPointMake(UUYLabelwidth+i*_xLabelWidth,UULabelHeight)];
-        [path addLineToPoint:CGPointMake(UUYLabelwidth+i*_xLabelWidth,self.frame.size.height-2*UULabelHeight)];
-        [path closePath];
-        shapeLayer.path = path.CGPath;
-        shapeLayer.strokeColor = [[[UIColor blackColor] colorWithAlphaComponent:0.1] CGColor];
-        shapeLayer.fillColor = [[UIColor whiteColor] CGColor];
-        shapeLayer.lineWidth = 1;
-        [self.layer addSublayer:shapeLayer];
-    }
-
 }
 
 -(void)setColors:(NSArray *)colors
