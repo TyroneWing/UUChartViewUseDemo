@@ -139,16 +139,16 @@
 -(void)dealTap:(UITapGestureRecognizer *)tap
 {
 //    NSLog(@"%ld",tap.view.tag);
-    if (chartView.chartStyle == UUChartLineStyle) {
-        UULineChart *lineC = chartView;
-        
-        NSLog(@"lineC.lineArray = %@",lineC.lineArray);
-        
- //       NSLog(@"lineC.lineArray.count = = %lu",(unsigned long)lineC.lineArray.count);
-//        CAShapeLayer *_chartLine =lineC.lineArray[tap.view.tag-8000];
-//        _chartLine.lineWidth = 0;
-        NSLog(@"%ld",tap.view.tag);
-    }
+//    if (chartView.chartStyle == UUChartLineStyle) {
+//        UULineChart *lineC = chartView;
+//        
+//        NSLog(@"lineC.lineArray = %@",lineC.lineArray);
+//        
+// //       NSLog(@"lineC.lineArray.count = = %lu",(unsigned long)lineC.lineArray.count);
+////        CAShapeLayer *_chartLine =lineC.lineArray[tap.view.tag-8000];
+////        _chartLine.lineWidth = 0;
+//        NSLog(@"%ld",tap.view.tag);
+//    }
 }
 
 #pragma mark - @required
