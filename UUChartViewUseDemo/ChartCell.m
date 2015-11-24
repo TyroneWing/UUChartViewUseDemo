@@ -105,27 +105,38 @@
     int legendCount = (int)arr.count;
     if (legendCount > 0) {
         for (int i = 0; i < legendCount; i++) {
+            
+            UIView *legColorView = [[UIView alloc] init];
+            legColorView.layer.cornerRadius = 3;
+            legColorView.backgroundColor = colorArray[i];
+            [_legendView addSubview:legColorView];
+            
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
             label.userInteractionEnabled = YES;
             label.tag = 8000+i;
-            //创建一个单击手势
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dealTap:)];
-            [label addGestureRecognizer:tap];
-            
-            UIFont *font = [UIFont fontWithName:@"Arial" size:14];
+//            //创建一个单击手势
+//            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dealTap:)];
+//            [label addGestureRecognizer:tap];
+            UIFont *font = [UIFont fontWithName:@"Arial" size:12];
             label.font = font;
             CGSize size = CGSizeMake(200,2000);
             label.text = arr[i];
             CGSize labelsize = [arr[i] sizeWithFont:font constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
             
-            if (_xFloat + labelsize.width  > kWIN_WIDTH-40) {
-                _xFloat = 0.0;
+            if (_xFloat + labelsize.width +25 > kWIN_WIDTH-40) {
+                _xFloat = 0;
                 _yFloat += labelsize.height+5;
             }
-            label.frame = CGRectMake(_xFloat, _yFloat, labelsize.width, labelsize.height );
-            label.textColor = colorArray[i];
+            label.frame = CGRectMake(_xFloat+16, _yFloat, labelsize.width, labelsize.height );
+            if (labelsize.height-10>0) {
+                legColorView.frame = CGRectMake(_xFloat, _yFloat+(labelsize.height-10)/2, 15, 10);
+            } else {
+                legColorView.frame = CGRectMake(_xFloat, _yFloat-(10-labelsize.height)/2, 15, 10);
+
+            }
+//            label.textColor = colorArray[i];
             [_legendView addSubview:label];
-            _xFloat += labelsize.width + 10;
+            _xFloat += labelsize.width + 25;
             if (i == legendCount-1) {
                 _height = _yFloat +labelsize.height+10;
             }
@@ -177,7 +188,6 @@
     return CGRangeMake(_max+1, _min);
 }
 
-#pragma mark 折线图专享功能
 
 //标记数值区域
 - (CGRange)UUChartMarkRangeInLineChart:(UUChart *)chart
@@ -192,7 +202,7 @@
     return YES;
 }
 
-//判断显示最大最小值
+//判断显示最大最小值(所有数值)
 - (BOOL)UUChart:(UUChart *)chart ShowMaxMinAtIndex:(NSInteger)index
 {
     return YES;

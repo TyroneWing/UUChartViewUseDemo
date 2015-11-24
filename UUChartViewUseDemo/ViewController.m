@@ -45,7 +45,6 @@
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         _chartDict = dict;
         
-        NSLog(@"----%@",dict);
         NSIndexSet *nd=[[NSIndexSet alloc]initWithIndex:0];
         [_tableView reloadSections:nd withRowAnimation:UITableViewRowAnimationAutomatic];
      
@@ -65,9 +64,7 @@
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         _barChartDict = dict;
         
-        NSLog(@"_barChartDict = %@",dict);
-        NSLog(@"----%@",dict);
-        NSIndexSet *nd=[[NSIndexSet alloc]initWithIndex:1];
+//        NSIndexSet *nd=[[NSIndexSet alloc]initWithIndex:1];
 //        [_tableView reloadSections:nd withRowAnimation:UITableViewRowAnimationAutomatic];
         [_tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -121,7 +118,6 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    NSLog(@"%d --- %p",indexPath.row,cell);
     cell.indexPath = indexPath;
     if (indexPath.row == 0) {
         cell.dict = _chartDict;
