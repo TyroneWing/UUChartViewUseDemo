@@ -76,7 +76,13 @@
     
     for (int i=0; i<5; i++) {
         UUChartLabel * label = [[UUChartLabel alloc] initWithFrame:CGRectMake(0.0,chartCavanHeight-i*levelHeight+5, UUYLabelwidth, UULabelHeight)];
-		label.text = [NSString stringWithFormat:@"%.1f",level * i+_yValueMin];
+        int va = (int)((level*i+_yValueMin)*10);
+        if (va%10 == 0) {
+            label.text = [NSString stringWithFormat:@"%d",(int)(level * i+_yValueMin)];
+        } else {
+            label.text = [NSString stringWithFormat:@"%.1f",level * i+_yValueMin];
+        }
+        label.adjustsFontSizeToFitWidth = YES;
 		[self addSubview:label];
     }
     
@@ -117,12 +123,14 @@
         num = xLabels.count;
     }
     _xLabelWidth = myScrollView.frame.size.width/num;
-    
     for (int i=0; i<xLabels.count; i++) {
-        UUChartLabel * label = [[UUChartLabel alloc] initWithFrame:CGRectMake((i *  _xLabelWidth ), self.frame.size.height - UULabelHeight, _xLabelWidth, UULabelHeight)];
+        UUChartLabel * label = [[UUChartLabel alloc] initWithFrame:CGRectMake((i *  _xLabelWidth ), self.frame.size.height - (UULabelHeight*2-2), _xLabelWidth, UULabelHeight*2-2)];
         label.text = xLabels[i];
+        label.numberOfLines = 0;
+
+        label.font = [UIFont systemFontOfSize:10];
+        label.adjustsFontSizeToFitWidth = YES;
         [myScrollView addSubview:label];
-        
         [_chartLabelsForX addObject:label];
     }
     
@@ -174,7 +182,7 @@
             [myScrollView addSubview:bar];
             bar.alpha = 1.0;
             if (value != 0.0) {
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(bar.frame.origin.x,(1 - grade) * bar.frame.size.height - 2 ,bar.frame.size.width,10)];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(bar.frame.origin.x,(1 - grade) * bar.frame.size.height - 1 ,bar.frame.size.width,10)];
                 label.textColor = [_colors objectAtIndex:i];
                 label.font = [UIFont systemFontOfSize:12];
                 label.textAlignment = NSTextAlignmentCenter;

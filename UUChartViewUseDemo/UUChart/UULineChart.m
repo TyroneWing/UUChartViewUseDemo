@@ -68,7 +68,12 @@
 
     for (int i=0; i<5; i++) {
         UUChartLabel * label = [[UUChartLabel alloc] initWithFrame:CGRectMake(0.0,chartCavanHeight-i*levelHeight+5, UUYLabelwidth, UULabelHeight)];
-		label.text = [NSString stringWithFormat:@"%.1f",(level * i+_yValueMin)];
+        int va = (int)((level*i+_yValueMin)*10);
+        if (va%10 == 0) {
+            label.text = [NSString stringWithFormat:@"%d",(int)(level * i+_yValueMin)];
+        } else {
+            label.text = [NSString stringWithFormat:@"%.1f",level * i+_yValueMin];
+        }
 		[self addSubview:label];
     }
     if ([super respondsToSelector:@selector(setMarkRange:)]) {

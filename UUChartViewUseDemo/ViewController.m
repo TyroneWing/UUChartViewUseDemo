@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "ChartCell.h"
 #import <AFNetworking.h>
+#define   kWIN_WIDTH  [[UIScreen mainScreen] bounds].size.width
+#define   kWIN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -45,9 +47,11 @@
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         _chartDict = dict;
         
-        NSIndexSet *nd=[[NSIndexSet alloc]initWithIndex:0];
-        [_tableView reloadSections:nd withRowAnimation:UITableViewRowAnimationAutomatic];
-     
+//        NSIndexSet *nd=[[NSIndexSet alloc]initWithIndex:0];
+//        [_tableView reloadSections:nd withRowAnimation:UITableViewRowAnimationAutomatic];
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
+        [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -57,6 +61,7 @@
 - (void)startDowmloadareaWarningData
 {
     NSString *url = @"http://112.74.195.125:8080/capi/statistics/mp/areaWarning";
+//    NSString *url =@"http://112.74.195.125:8080/capi/statistics/mp/highRisk";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFCompoundResponseSerializer serializer];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -66,7 +71,10 @@
         
 //        NSIndexSet *nd=[[NSIndexSet alloc]initWithIndex:1];
 //        [_tableView reloadSections:nd withRowAnimation:UITableViewRowAnimationAutomatic];
-        [_tableView reloadData];
+//        [_tableView reloadData];
+        
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:1 inSection:0];
+        [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -88,7 +96,7 @@
 
 -(void)createTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kWIN_WIDTH, kWIN_HEIGHT-20) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -139,9 +147,9 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     CGRect frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width , 30);
     UILabel *label = [[UILabel alloc]initWithFrame:frame];
-    label.font = [UIFont systemFontOfSize:30];
+    label.font = [UIFont systemFontOfSize:20];
     label.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3];
-    label.text = section ? @"Bar":@"Line";
+    label.text = @"LineChart And BarChart";
     label.textColor = [UIColor colorWithRed:0.257 green:0.650 blue:0.478 alpha:1.000];
     label.textAlignment = NSTextAlignmentCenter;
     return label;
