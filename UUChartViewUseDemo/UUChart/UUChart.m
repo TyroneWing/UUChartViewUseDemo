@@ -10,9 +10,7 @@
 
 @interface UUChart ()
 
-@property (strong, nonatomic) UULineChart * lineChart;
 
-@property (strong, nonatomic) UUBarChart * barChart;
 
 @property (assign, nonatomic) id<UUChartDataSource> dataSource;
 

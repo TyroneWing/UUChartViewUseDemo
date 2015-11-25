@@ -1,18 +1,18 @@
 //
-//  ChartCell.m
+//  BigChartViewController.m
 //  UUChartViewUseDemo
 //
-//  Created by yi on 15/11/18.
+//  Created by yi on 15/11/25.
 //  Copyright © 2015年 yi. All rights reserved.
 //
 
-#import "ChartCell.h"
-#import "UUChart.h"
+#import "BigChartViewController.h"
+
 
 #define   kWIN_WIDTH  [[UIScreen mainScreen] bounds].size.width
 #define   kWIN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 
-@interface ChartCell ()<UUChartDataSource>
+@interface BigChartViewController ()<UUChartDataSource>
 {
     UUChart *chartView;
     UIView *_legendView;
@@ -25,13 +25,26 @@
 }
 @end
 
-@implementation ChartCell
+@implementation BigChartViewController
 
-- (void)awakeFromNib {
-    // Initialization code
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
     
+    [self create];
 }
-- (void)setDict:(NSDictionary *)dict
+//单击手势
+-(void)dealTap:(UITapGestureRecognizer *)tap
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)create
 {
     colorArray = @[ChartFirstColor,ChartSecondColor,ChartThirdColor,ChartFourthColor,ChartFifthColor,ChartSixthColor,ChartSeventhColor,UUGreen,UURed,UUBrown,[UIColor blueColor],[UIColor yellowColor],UUButtonGrey,UUDarkYellow];
     _min = 0.0;
@@ -39,7 +52,6 @@
     _xFloat = 0.0;
     _yFloat = 0.0;
     _height = 0.0;
-    _dict = dict;
     if ([[_dict allKeys] containsObject:@"data"]) {
         NSArray *dataArr = _dict[@"data"];
         for (NSArray *arr in dataArr) {
@@ -54,17 +66,8 @@
             }
         }
     }
-
+    
     [self createchartView];
-}
-
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
-    {
-//        [self createchartView];
-    }
-    return self;
 }
 
 
@@ -78,10 +81,8 @@
         [_legendView removeFromSuperview];
         _legendView = nil;
     }
-    
+
     _legendView = [[UIView alloc] initWithFrame:CGRectMake(40, 10, [UIScreen mainScreen].bounds.size.height-60, _height)];
-    _legendView.userInteractionEnabled = YES;
-    [self.contentView addSubview:_legendView];
     NSArray *arr = _dict[@"legend"];
     int legendCount = (int)arr.count;
     if (legendCount > 0) {
@@ -96,58 +97,46 @@
             btn.selected = YES;
             btn.tag = 8000 + i;
             [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-
-            UIFont *font = [UIFont fontWithName:@"Arial" size:12];
+            
+            UIFont *font = [UIFont fontWithName:@"Arial" size:16];
             btn.titleLabel.font = font;
             CGSize size = CGSizeMake(200,2000);
             [btn setTitle:arr[i] forState:UIControlStateSelected];
             [btn setTitle:arr[i] forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
             [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//            label.text = arr[i];
             CGSize labelsize = [arr[i] sizeWithFont:font constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
             
-            if (_xFloat + labelsize.width +25 > kWIN_WIDTH-40) {
+            if (_xFloat + labelsize.width +30 > kWIN_HEIGHT-40) {
                 _xFloat = 0;
                 _yFloat += labelsize.height+5;
             }
-            btn.frame = CGRectMake(_xFloat+16, _yFloat, labelsize.width, labelsize.height );
-            if (labelsize.height-10>0) {
-                legColorView.frame = CGRectMake(_xFloat, _yFloat+(labelsize.height-10)/2, 15, 10);
+            btn.frame = CGRectMake(_xFloat+16*2, _yFloat, labelsize.width, labelsize.height);
+            if (labelsize.height-15>0) {
+                legColorView.frame = CGRectMake(_xFloat, _yFloat+(labelsize.height-15)/2, 15*2, 15);
             } else {
-                legColorView.frame = CGRectMake(_xFloat, _yFloat-(10-labelsize.height)/2, 15, 10);
-                
+                legColorView.frame = CGRectMake(_xFloat, _yFloat-(15-labelsize.height)/2, 15*2, 15);
             }
             //            label.textColor = colorArray[i];
             [_legendView addSubview:btn];
-            _xFloat += labelsize.width + 25;
+            _xFloat += labelsize.width + 40;
             if (i == legendCount-1) {
                 _height = _yFloat +labelsize.height+10;
             }
         }
     }
-    _legendView.frame = CGRectMake(40, 10, [UIScreen mainScreen].bounds.size.width-60, _height);
+    _legendView.frame = CGRectMake(40, 10, [UIScreen mainScreen].bounds.size.height-60, _height);
+    [self.view addSubview:_legendView];
     
-    chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(10, _height, [UIScreen mainScreen].bounds.size.width-20, 150)
+    chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(10, _height+5, [UIScreen mainScreen].bounds.size.height-20, kWIN_WIDTH-_height-10)
                                               withSource:self
-                                               withStyle:_indexPath.row==1?UUChartBarStyle:UUChartLineStyle];
-    /**
-     当柱状图风格为UUChartBarStyle时修改 strokeChart 函数可以修改柱状图样式
-     */
-//    chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, 150)
-//                                              withSource:self
-//                                               withStyle:UUChartBarStyle];
-
-    //创建一个单击手势
+                                               withStyle:_type];
+    chartView.showRange = YES;
+    [self.view addSubview:chartView];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dealTap:)];
     [chartView addGestureRecognizer:tap];
-    chartView.showRange = YES;
-    [self.contentView addSubview:chartView];
     [chartView strokeChart];
-
 }
-
-
 - (void)btnClick:(UIButton *)btn
 {
     if (chartView.chartStyle == UUChartLineStyle) {
@@ -179,40 +168,10 @@
         }
     }
 }
-
-//单击手势
--(void)legendLabelTap:(UITapGestureRecognizer *)tap
-{
-    
-    if (chartView.chartStyle == UUChartLineStyle) {
-
-        CAShapeLayer *chartLine = chartView.lineChart.lineArray[tap.view.tag-8000];
-        chartLine.lineWidth = 0;
-        NSArray *a = chartView.lineChart.lineLabelArray[tap.view.tag-8000];
-        for (UIView *view in a) {
-            view.alpha = 0;
-        }
-        NSArray *b = chartView.lineChart.linePointArray[tap.view.tag-8000];
-        for (UIView *pointView in b) {
-            pointView.alpha = 0;
-        }
-    }
-    
-}
-
-//单击手势
--(void)dealTap:(UITapGestureRecognizer *)tap
-{
-    if (self.tapBlock) {
-        self.tapBlock();
-    }
-}
-
 #pragma mark - @required
 //横坐标标题数组
 - (NSArray *)UUChart_xLableArray:(UUChart *)chart
 {
-    
     NSArray *arr = _dict[@"item"];
     return arr;
 }
@@ -238,7 +197,7 @@
 //标记数值区域
 - (CGRange)UUChartMarkRangeInLineChart:(UUChart *)chart
 {
-
+    
     return CGRangeMake(25, 75);
 }
 
@@ -254,10 +213,44 @@
     return YES;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationLandscapeRight;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
 }
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationPortrait;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

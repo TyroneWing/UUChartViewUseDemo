@@ -195,6 +195,8 @@
 -(void)strokeChart
 {
     NSMutableArray *lineArr = [[NSMutableArray alloc] init];
+    _lineLabelArray = [[NSMutableArray alloc] init];
+    _linePointArray = [[NSMutableArray alloc] init];
     for (int i=0; i<_yValues.count; i++) {
         NSArray *childAry = _yValues[i];
         if (childAry.count==0) {
@@ -232,6 +234,8 @@
         CGFloat xPosition = ( _xLabelWidth/2.0);
         CGFloat chartCavanHeight = myScrollView.frame.size.height - UULabelHeight*3;
         
+        NSMutableArray *labelArray = [[NSMutableArray alloc] init];
+        NSMutableArray *pointArray = [[NSMutableArray alloc] init];
         float grade = ((float)firstValue-_yValueMin) / ((float)_yValueMax-_yValueMin);
         //第一个点
         BOOL isShowMaxAndMinPoint = YES;
@@ -246,7 +250,9 @@
         [self addPoint:CGPointMake(xPosition, chartCavanHeight - grade * chartCavanHeight+UULabelHeight)
                  index:i
                 isShow:isShowMaxAndMinPoint
-                 value:firstValue];
+                 value:firstValue
+            pointArray:pointArray
+         labelArray:labelArray];
 
         
         [progressline moveToPoint:CGPointMake(xPosition, chartCavanHeight - grade * chartCavanHeight+UULabelHeight)];
@@ -254,11 +260,10 @@
         [progressline setLineCapStyle:kCGLineCapRound];
         [progressline setLineJoinStyle:kCGLineJoinRound];
         NSInteger index = 0;
+        
         for (NSString * valueString in childAry) {
-            
             float grade =([valueString floatValue]-_yValueMin) / ((float)_yValueMax-_yValueMin);
             if (index != 0) {
-                
                 CGPoint point = CGPointMake(xPosition+index*_xLabelWidth, chartCavanHeight - grade * chartCavanHeight+UULabelHeight);
                 [progressline addLineToPoint:point];
                 
@@ -274,12 +279,16 @@
                 [self addPoint:point
                          index:i
                         isShow:isShowMaxAndMinPoint
-                         value:[valueString floatValue]];
-//                [progressline stroke];
+                         value:[valueString floatValue]
+                    pointArray:pointArray
+                 labelArray:labelArray];
+                
             }
             index += 1;
         }
         
+        [_lineLabelArray addObject:labelArray];
+        [_linePointArray addObject:pointArray];
         _chartLine.path = progressline.CGPath;
         if ([[_colors objectAtIndex:i] CGColor]) {
             _chartLine.strokeColor = [[_colors objectAtIndex:i] CGColor];
@@ -299,7 +308,7 @@
     self.lineArray = lineArr;
 }
 
-- (void)addPoint:(CGPoint)point index:(NSInteger)index isShow:(BOOL)isHollow value:(CGFloat)value
+- (void)addPoint:(CGPoint)point index:(NSInteger)index isShow:(BOOL)isHollow value:(CGFloat)value pointArray:(NSMutableArray *)pointArray labelArray:(NSMutableArray *)labelArray
 {
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(5, 5, 8, 8)];
     view.center = point;
@@ -322,8 +331,10 @@
         label.textColor = [_colors objectAtIndex:index];
         label.text = [NSString stringWithFormat:@"%g",value];
         label.adjustsFontSizeToFitWidth = YES;
+        [labelArray addObject:label];
         [myScrollView addSubview:label];
     }
+    [pointArray addObject:view];
     [myScrollView addSubview:view];
 }
 

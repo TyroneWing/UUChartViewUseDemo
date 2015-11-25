@@ -20,6 +20,7 @@ typedef enum {
 
 
 @class UUChart;
+
 @protocol UUChartDataSource <NSObject>
 
 @required
@@ -53,7 +54,9 @@ typedef enum {
 //是否自动显示范围
 @property (nonatomic, assign) BOOL showRange;
 @property (assign) UUChartStyle chartStyle;
+@property (strong, nonatomic) UULineChart * lineChart;
 
+@property (strong, nonatomic) UUBarChart * barChart;
 -(id)initwithUUChartDataFrame:(CGRect)rect withSource:(id<UUChartDataSource>)dataSource withStyle:(UUChartStyle)style;
 
 - (void)showInView:(UIView *)view;

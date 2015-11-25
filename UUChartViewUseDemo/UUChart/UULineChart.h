@@ -22,6 +22,8 @@
 //使用lineArray储存折线
 @property (nonatomic, strong) NSArray *lineArray;
 
+@property (nonatomic, strong) NSMutableArray *lineLabelArray;
+@property (nonatomic, strong) NSMutableArray *linePointArray;
 
 @property (strong, nonatomic) NSArray * xLabels;
 @property (strong, nonatomic) NSArray * yLabels;

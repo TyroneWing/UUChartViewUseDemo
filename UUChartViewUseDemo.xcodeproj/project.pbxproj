@@ -22,6 +22,7 @@
 		190718F41BFC6FEA00735287 /* UUChartLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 190718EC1BFC6FEA00735287 /* UUChartLabel.m */; };
 		190718F51BFC6FEA00735287 /* UUColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 190718EE1BFC6FEA00735287 /* UUColor.m */; };
 		190718F61BFC6FEA00735287 /* UULineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 190718F01BFC6FEA00735287 /* UULineChart.m */; };
+		194757731C055DC100AF8CF4 /* BigChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 194757721C055DC100AF8CF4 /* BigChartViewController.m */; };
 		EAB9468ECF76E858575DF56F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 933D3D5D31BA626A92237954 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,8 @@
 		190718EE1BFC6FEA00735287 /* UUColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUColor.m; sourceTree = "<group>"; };
 		190718EF1BFC6FEA00735287 /* UULineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UULineChart.h; sourceTree = "<group>"; };
 		190718F01BFC6FEA00735287 /* UULineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UULineChart.m; sourceTree = "<group>"; };
+		194757711C055DC100AF8CF4 /* BigChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigChartViewController.h; sourceTree = "<group>"; };
+		194757721C055DC100AF8CF4 /* BigChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigChartViewController.m; sourceTree = "<group>"; };
 		2694639DB486D90F015103DB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		933D3D5D31BA626A92237954 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFE25FAF92A0C10574AA67E6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				190718B21BFC6FC100735287 /* AppDelegate.m */,
 				190718B41BFC6FC100735287 /* ViewController.h */,
 				190718B51BFC6FC100735287 /* ViewController.m */,
+				194757711C055DC100AF8CF4 /* BigChartViewController.h */,
+				194757721C055DC100AF8CF4 /* BigChartViewController.m */,
 				190718E11BFC6FD900735287 /* ChartCell.h */,
 				190718E21BFC6FD900735287 /* ChartCell.m */,
 				190718B71BFC6FC100735287 /* Main.storyboard */,
@@ -397,6 +402,7 @@
 				190718B31BFC6FC100735287 /* AppDelegate.m in Sources */,
 				190718F41BFC6FEA00735287 /* UUChartLabel.m in Sources */,
 				190718F31BFC6FEA00735287 /* UUChart.m in Sources */,
+				194757731C055DC100AF8CF4 /* BigChartViewController.m in Sources */,
 				190718B01BFC6FC100735287 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

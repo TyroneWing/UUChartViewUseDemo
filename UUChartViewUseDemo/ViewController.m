@@ -11,6 +11,7 @@
 #import <AFNetworking.h>
 #define   kWIN_WIDTH  [[UIScreen mainScreen] bounds].size.width
 #define   kWIN_HEIGHT [[UIScreen mainScreen] bounds].size.height
+#import "BigChartViewController.h"
 
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -89,7 +90,7 @@
 
 -(void)createTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kWIN_WIDTH, kWIN_HEIGHT-20) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWIN_WIDTH, kWIN_HEIGHT) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -125,6 +126,14 @@
     } else if (indexPath.row == 1) {
         cell.dict = _barChartDict;
     }
+    
+    [cell setTapBlock:^{
+        BigChartViewController *bigChartVC = [[BigChartViewController alloc] init];
+        bigChartVC.dict = cell.dict;
+        bigChartVC.type = cell.indexPath.row;
+        [self.navigationController pushViewController:bigChartVC animated:YES];
+        
+    }];
     
     return cell;
 }

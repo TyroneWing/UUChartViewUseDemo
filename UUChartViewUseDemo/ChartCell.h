@@ -11,4 +11,5 @@
 @interface ChartCell : UITableViewCell
 @property (nonatomic,strong) NSDictionary *dict;
 @property (nonatomic,strong) NSIndexPath *indexPath;
+@property (nonatomic, copy) void (^tapBlock)();
 @end
