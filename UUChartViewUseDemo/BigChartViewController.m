@@ -22,6 +22,7 @@
     NSArray *colorArray;
     CGFloat _min;
     CGFloat _max;
+    UIView *backView;
 }
 @end
 
@@ -32,7 +33,12 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWIN_HEIGHT, kWIN_WIDTH)];
+    [self.view addSubview:backView];
+    
     [self create];
+    backView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    backView.center = self.view.center;
 }
 //单击手势
 -(void)dealTap:(UITapGestureRecognizer *)tap
@@ -126,13 +132,13 @@
         }
     }
     _legendView.frame = CGRectMake(40, 10, [UIScreen mainScreen].bounds.size.height-60, _height);
-    [self.view addSubview:_legendView];
+    [backView addSubview:_legendView];
     
-    chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(10, _height+5, [UIScreen mainScreen].bounds.size.height-20, kWIN_WIDTH-_height-10)
+    chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(20, _height+5, [UIScreen mainScreen].bounds.size.height-30, kWIN_WIDTH-_height-10)
                                               withSource:self
                                                withStyle:_type];
     chartView.showRange = YES;
-    [self.view addSubview:chartView];
+    [backView addSubview:chartView];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dealTap:)];
     [chartView addGestureRecognizer:tap];
     [chartView strokeChart];
@@ -207,41 +213,47 @@
     return YES;
 }
 
-//判断显示最大最小值(所有数值)
-- (BOOL)UUChart:(UUChart *)chart ShowMaxMinAtIndex:(NSInteger)index
-{
-    return YES;
-}
+////判断显示最大最小值(所有数值)
+//- (BOOL)UUChart:(UUChart *)chart ShowMaxMinAtIndex:(NSInteger)index
+//{
+//    return YES;
+//}
+//
+//- (BOOL) shouldAutorotateToInterfaceOrientation:
+//(UIInterfaceOrientation)toInterfaceOrientation {
+//    return (toInterfaceOrientation == UIInterfaceOrientationLandscapeRight);
+//}
+//- (NSUInteger)supportedInterfaceOrientations {
+//    return UIInterfaceOrientationMaskLandscapeRight;
+//}
 
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
-        SEL selector = NSSelectorFromString(@"setOrientation:");
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
-        [invocation setSelector:selector];
-        [invocation setTarget:[UIDevice currentDevice]];
-        int val = UIInterfaceOrientationLandscapeRight;
-        [invocation setArgument:&val atIndex:2];
-        [invocation invoke];
-    }
-}
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
-        SEL selector = NSSelectorFromString(@"setOrientation:");
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
-        [invocation setSelector:selector];
-        [invocation setTarget:[UIDevice currentDevice]];
-        int val = UIInterfaceOrientationPortrait;
-        [invocation setArgument:&val atIndex:2];
-        [invocation invoke];
-    }
-
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+//        SEL selector = NSSelectorFromString(@"setOrientation:");
+//        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+//        [invocation setSelector:selector];
+//        [invocation setTarget:[UIDevice currentDevice]];
+//        int val = UIInterfaceOrientationLandscapeRight;
+//        [invocation setArgument:&val atIndex:2];
+//        [invocation invoke];
+//    }
+//}
+//
+//- (void)viewWillDisappear:(BOOL)animated
+//{
+//    [super viewWillDisappear:animated];
+//    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+//        SEL selector = NSSelectorFromString(@"setOrientation:");
+//        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+//        [invocation setSelector:selector];
+//        [invocation setTarget:[UIDevice currentDevice]];
+//        int val = UIInterfaceOrientationPortrait;
+//        [invocation setArgument:&val atIndex:2];
+//        [invocation invoke];
+//    }
+//}
 
 /*
 #pragma mark - Navigation
