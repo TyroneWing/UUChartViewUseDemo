@@ -10,6 +10,9 @@
 #import "UUChartLabel.h"
 #import "UUBar.h"
 
+//柱状图柱子个数
+#define barCount  5
+
 @interface UUBarChart ()
 {
     UIScrollView *myScrollView;
@@ -113,8 +116,8 @@
     
     _xLabels = xLabels;
     NSInteger num;
-    if (xLabels.count>=8) {
-        num = 8;
+    if (xLabels.count>=barCount) {
+        num = barCount;
     }
 //    else if (xLabels.count<=4){
 //        num = 4;
