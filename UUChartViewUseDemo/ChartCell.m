@@ -83,7 +83,6 @@
     chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(10, 60, [UIScreen mainScreen].bounds.size.width-20, 150)
                                               withSource:self
                                                withStyle:_indexPath.row==1?UUChartBarStyle:UUChartLineStyle];
-    
     /**
      当柱状图风格为UUChartBarStyle时修改 strokeChart 函数可以修改柱状图样式
      */
@@ -93,7 +92,7 @@
 
     chartView.showRange = YES;
     [self.contentView addSubview:chartView];
-    
+
     _legendView = [[UIView alloc] initWithFrame:CGRectMake(40, 10, [UIScreen mainScreen].bounds.size.width-60, 50)];
     [self.contentView addSubview:_legendView];
     

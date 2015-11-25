@@ -10,13 +10,14 @@
 #import "UUChartLabel.h"
 #import "UUBar.h"
 
-//柱状图柱子个数
-#define barCount  5
 
 @interface UUBarChart ()
 {
     UIScrollView *myScrollView;
 }
+//柱状图柱子个数
+@property (nonatomic,assign) int barCount;
+
 @end
 
 @implementation UUBarChart {
@@ -33,6 +34,8 @@
         myScrollView.showsHorizontalScrollIndicator = NO;
         myScrollView.showsVerticalScrollIndicator = NO;
         [self addSubview:myScrollView];
+        //barcount默认5
+        _barCount = 5;
     }
     return self;
 }
@@ -116,8 +119,8 @@
     
     _xLabels = xLabels;
     NSInteger num;
-    if (xLabels.count>=barCount) {
-        num = barCount;
+    if (xLabels.count>=_barCount) {
+        num = _barCount;
     }
 //    else if (xLabels.count<=4){
 //        num = 4;

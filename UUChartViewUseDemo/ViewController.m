@@ -31,14 +31,14 @@
     _barChartDict = [[NSMutableDictionary alloc] init];
 
     [self createTableView];
-    [self startDowmloadData:13];
+    [self startDowmloadData:12];
     [self startDowmloadareaWarningData];
-//    [self addBtn];
+    
 }
 
 - (void)startDowmloadData:(int)time
 {
-    NSString *url = [NSString stringWithFormat:@"http://112.74.195.125:8080/capi/statistics/water/averageByMpCustom/6/1/2015-11-%02d/2015-11-19",time];
+    NSString *url = [NSString stringWithFormat:@"http://112.74.195.125:8080/capi/statistics/water/averageByMpCustom/6/1/2015-11-%02d/2015-11-25",time];
 //    NSString *url = @"http://112.74.195.125:8080/capi/statistics/mp/areaWarning";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFCompoundResponseSerializer serializer];
@@ -80,18 +80,11 @@
     }];
 }
 
-- (void)addBtn
-{
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(300, 300, 100, 100);
-    btn.backgroundColor = [UIColor redColor];
-    [btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
-    [_tableView addSubview:btn];
-}
+
 
 - (void)btnClick
 {
-    [self startDowmloadData:5];
+    [self startDowmloadData:arc4random()%10+10];
 }
 
 -(void)createTableView
@@ -152,6 +145,13 @@
     label.text = @"LineChart And BarChart";
     label.textColor = [UIColor colorWithRed:0.257 green:0.650 blue:0.478 alpha:1.000];
     label.textAlignment = NSTextAlignmentCenter;
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 0, 60, 30);
+    btn.backgroundColor = [UIColor redColor];
+    [btn setTitle:@"Reload" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
+    [label addSubview:btn];
+    label.userInteractionEnabled = YES;
     return label;
 }
 
