@@ -213,11 +213,13 @@
     return YES;
 }
 
-////判断显示最大最小值(所有数值)
-//- (BOOL)UUChart:(UUChart *)chart ShowMaxMinAtIndex:(NSInteger)index
-//{
-//    return YES;
-//}
+//判断显示最大最小值(所有数值都显示，最大最小值实心圆点表示)
+- (BOOL)UUChart:(UUChart *)chart ShowMaxMinAtIndex:(NSInteger)index
+{
+    return YES;
+}
+
+
 //
 //- (BOOL) shouldAutorotateToInterfaceOrientation:
 //(UIInterfaceOrientation)toInterfaceOrientation {
